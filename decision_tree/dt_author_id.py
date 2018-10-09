@@ -11,15 +11,22 @@
 import sys
 from time import time
 sys.path.append("../tools/")
-from email_preprocess import preprocess
 
+import matplotlib.pyplot as plt
+import numpy as np
+import pylab as pl
+
+from email_preprocess import preprocess
+from class_vis import prettyPicture, output_image
+from prep_terrain_data import makeTerrainData
 
 ### features_train and features_test are the features for the training
 ### and testing datasets, respectively
 ### labels_train and labels_test are the corresponding item labels
 features_train, features_test, labels_train, labels_test = preprocess()
 
-
+### Visualization on terrain data
+#features_train, labels_train, features_test, labels_test = makeTerrainData()
 
 
 #########################################################
@@ -44,10 +51,11 @@ print "prediction time:", round(time()-t0, 3), "s"
 
 ##accuracy
 accuracy = accuracy_score(predictions, labels_test)
-print "accuracy = ", round(accuracy,3)
+print "accuracy = ", accuracy
 
 #########################################################
-#prettyPicture(clf, features_test, labels_test)
-#output_image("test.png", "png", open("test.png", "rb").read())
-
-
+## NOTE: Visualizztion only works for Terrain Data
+try:
+    prettyPicture(classifier, features_test, labels_test)
+except NameError as e:
+    print (e)
