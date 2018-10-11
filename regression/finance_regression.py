@@ -19,6 +19,7 @@ sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
 dictionary = pickle.load( open("../final_project/final_project_dataset_modified.pkl", "r") )
 
+
 ### list the features you want to look at--first item in the 
 ### list will be the "target" feature
 features_list = ["bonus", "salary"]
@@ -33,7 +34,6 @@ train_color = "b"
 test_color = "r"
 
 
-
 ### Your regression goes here!
 ### Please name it reg, so that the plotting code below picks it up and 
 ### plots it correctly. Don't forget to change the test_color above from "b" to
@@ -42,6 +42,7 @@ from sklearn import linear_model
 reg = linear_model.LinearRegression()
 reg.fit(feature_train, target_train)
 
+print "r-square:  ", reg.score(feature_test, target_test),"(test data)"
 print "r-square:  ", reg.score(feature_train, target_train)
 print "slope:     ", reg.coef_
 print "intercept: ", reg.intercept_
@@ -65,6 +66,10 @@ try:
     plt.plot( feature_test, reg.predict(feature_test) )
 except NameError:
     pass
+###remove outlier and plot line
+reg.fit(feature_test, target_test)
+print "slope :     ", reg.coef_,"(minus outlier)"
+plt.plot(feature_train, reg.predict(feature_train), color="b") 
 plt.xlabel(features_list[1])
 plt.ylabel(features_list[0])
 plt.legend()
