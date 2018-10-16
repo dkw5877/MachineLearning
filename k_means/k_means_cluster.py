@@ -37,22 +37,48 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
 data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r") )
 ### there's an outlier--remove it! 
 data_dict.pop("TOTAL", 0)
+# print "data = ", data_dict
 
 ## get the dictionary for each employee
 contents = data_dict.values()
 
 ## for each employee data extract the required data for the key (exercised stock options or salary) into an array
-values = [d['salary'] for d in contents]
+salaries = [d['salary'] for d in contents]
+stock_options = [d['exercised_stock_options'] for d in contents]
 
 ### filter out 'NaN' from the array of values
-values = [x for x in values if str(x) != 'NaN']
+salaries = [x for x in salaries if str(x) != 'NaN']
+stock_options = [x for x in stock_options if str(x) != 'NaN']
 
 # print min and max values from the array
-minValue = min(values)
-print "min =",minValue
-maxValue = max(values)
-print "max =",maxValue
+minValue = min(salaries)
+print "min salary =",minValue
+maxValue = max(salaries)
+print "max salary =",maxValue
 
+minValue = min(stock_options)
+print "min options =",minValue
+maxValue = max(stock_options)
+print "max options =",maxValue
+
+def createMatrix(arr):
+    import array
+    output = []
+    for i in arr:
+        output.append([float(i)])
+    return output
+
+##scale the data
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+## rescale the salary data
+salaries_matrix = createMatrix(sorted(salaries))
+scaled_salaries = scaler.fit_transform(salaries_matrix)
+print scaled_salaries
+
+## rescale the exercised_stock_options data
+options_matrix = createMatrix(sorted(stock_options))
+scaled_options = scaler.fit_transform(options_matrix)
 
 ### the input features we want to use 
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
