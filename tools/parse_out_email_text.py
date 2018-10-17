@@ -28,16 +28,29 @@ def parseOutText(f):
         text_string = content[1].translate(string.maketrans("", ""), string.punctuation)
 
         ### project part 2: comment out the line below
-        words = text_string
+        # words = text_string
+        import nltk
+        from nltk.stem.snowball import SnowballStemmer
+        from sklearn.feature_extraction.text import CountVectorizer
 
         ### split the text string into individual words, stem each word,
         ### and append the stemmed word to words (make sure there's a single
         ### space between each stemmed word)
-        
 
+        ## split sentence into individual words
+        word_list = nltk.word_tokenize(text_string)
+        # print word_list
 
+        ## create the stemmer and stem each word,
+        ## create words string by concatenating the stems 
+        stemmer = SnowballStemmer("english")
+     
+        for word in word_list:
+            stem = stemmer.stem(word)+" "
+            words += stem
 
-
+        print words
+    
     return words
 
     
