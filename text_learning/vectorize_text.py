@@ -54,12 +54,15 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
 
             ### remove the list of key words from the text
             stemmed_email = stemmed_email.replace("sara","").replace("shackleton","").replace("chris","").replace("germani","")
+
+            ## for lesson 11 only
+            # stemmed_email = stemmed_email.replace("sshacklensf", "").replace("cgermannsf","")
          
             ### append the text to word_data
             word_data.append(stemmed_email)
 
             ### append a 0 to from_data if email is from Sara, and 1 if email is from Chris
-            if name == "sara":
+            if name == 'sara':
                 from_data.append("0")
             else:
                 from_data.append("1")
@@ -76,12 +79,14 @@ pickle.dump( from_data, open("your_email_authors.pkl", "w") )
 
 
 ### in Part 4, do TfIdf vectorization here
+### correct answer = 38757
+### our result = 38755
 from sklearn.feature_extraction.text import TfidfVectorizer
 vectorizer = TfidfVectorizer(stop_words="english", lowercase=True)
 vectors = vectorizer.fit_transform(word_data)
 features = vectorizer.get_feature_names()
 print len(features)
-### result = 38753
-### answer = 38757
+print features[34597]
+
 
 
