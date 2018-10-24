@@ -1,0 +1,7 @@
+                precision    recall  f1-score   support
+Ariel Sharon       0.10      0.15      0.12        13
+Ariel Sharon       0.25      0.46      0.32        13
+Ariel Sharon       0.56      0.69      0.62        13
+Ariel Sharon       0.59      0.77      0.67        13
+Ariel Sharon       0.64      0.69      0.67        13
+Ariel Sharon       0.64      0.69      0.67        13

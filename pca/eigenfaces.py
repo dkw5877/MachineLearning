@@ -19,16 +19,20 @@ The dataset used in this example is a preprocessed excerpt of the
 print __doc__
 
 from time import time
+import sys
 import logging
-import pylab as pl
+# move import to just before use or it causes an importerror
+# import pylab as pl
 import numpy as np
 
-from sklearn.cross_validation import train_test_split
+#replace cross_validation with model_selection
+#replace RandomizedPCA with PCA
+from sklearn.model_selection import train_test_split
 from sklearn.datasets import fetch_lfw_people
-from sklearn.grid_search import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
-from sklearn.decomposition import RandomizedPCA
+from sklearn.decomposition import PCA
 from sklearn.svm import SVC
 
 # Display progress logs on stdout
@@ -66,15 +70,18 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random
 ###############################################################################
 # Compute a PCA (eigenfaces) on the face dataset (treated as unlabeled
 # dataset): unsupervised feature extraction / dimensionality reduction
+# [10, 15, 25, 50, 100, 250]
 n_components = 150
 
 print "Extracting the top %d eigenfaces from %d faces" % (n_components, X_train.shape[0])
 t0 = time()
-pca = RandomizedPCA(n_components=n_components, whiten=True).fit(X_train)
+pca = PCA(n_components=n_components, whiten=True).fit(X_train)
 print "done in %0.3fs" % (time() - t0)
 
 eigenfaces = pca.components_.reshape((n_components, h, w))
-
+## quiz answer is the explained_variance_ratio_ 
+print "top two explained_variances ", (pca.explained_variance_[0], pca.explained_variance_[1])
+print "top two explained_variance_ratios ", (pca.explained_variance_ratio_[0], pca.explained_variance_ratio_[1])
 print "Projecting the input data on the eigenfaces orthonormal basis"
 t0 = time()
 X_train_pca = pca.transform(X_train)
@@ -113,6 +120,8 @@ print confusion_matrix(y_test, y_pred, labels=range(n_classes))
 
 ###############################################################################
 # Qualitative evaluation of the predictions using matplotlib
+# import matplotlib.pyplot as pl
+import pylab as pl
 
 def plot_gallery(images, titles, h, w, n_row=3, n_col=4):
     """Helper function to plot a gallery of portraits"""
