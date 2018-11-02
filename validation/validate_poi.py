@@ -15,6 +15,7 @@ import sys
 from time import time
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
+sort_keys = '../tools/python2_lesson13_keys.pkl'
 
 data_dict = pickle.load(open("../final_project/final_project_dataset.pkl", "r") )
 
@@ -28,8 +29,6 @@ data = featureFormat(data_dict, features_list)
 # if using python 3 we need to sort the keys
 # data = featureFormat(data_dict, features_list,sort_keys = '../tools/python2_lesson13_keys.pkl')
 labels, features = targetFeatureSplit(data)
-
-
 
 ### it's all yours from here forward!  
 from sklearn.model_selection import train_test_split
