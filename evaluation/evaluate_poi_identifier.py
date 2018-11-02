@@ -102,7 +102,7 @@ print "recall score: ", score
 
 #Recall of this classifier
 #true_positives / (true_positives + false_negatives)
-# 6 / (6 + 2) = 0.666
+# 6 / (6 + 2) = 0.75
 
 ##accuracy
 # from sklearn.metrics import accuracy_score
